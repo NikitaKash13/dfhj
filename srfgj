@@ -1,0 +1,124 @@
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+import javax.swing.event.MouseInputListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.util.Random;
+
+
+public class Osu extends JPanel implements MouseInputListener, KeyListener {
+    int ovalX = 383 ;
+    int ovalY = 250 ;
+    int  j ;
+    private long startTime = System.currentTimeMillis();
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+        if ( j < 10) {
+
+
+            int xCoordinate = mouseEvent.getX();
+            int yCoordinate = mouseEvent.getY();
+            int distanceFromClickToCenterOfBall_x = Math.abs(xCoordinate - ovalX);
+            int distanceFromClickToCenterOfBall_y = Math.abs(yCoordinate - ovalY);
+
+            if (Math.sqrt(distanceFromClickToCenterOfBall_x * distanceFromClickToCenterOfBall_x
+                    + distanceFromClickToCenterOfBall_y * distanceFromClickToCenterOfBall_y) > 25
+            ) {
+            } else {
+                long currentTime = System.currentTimeMillis();
+
+
+                ovalX = new Random().nextInt(775);
+                ovalY = new Random().nextInt(500);
+
+                JOptionPane.showMessageDialog(null, (float) (currentTime - startTime) / 1000 + "сек");
+                startTime = System.currentTimeMillis();
+                j++;
+            }   }
+
+        else JOptionPane.showMessageDialog(null, "конец игры");
+
+        repaint();
+    }
+
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+
+        System.out.println("Нажата клавиша с кодом " + keyEvent.getKeyCode());
+
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.BLUE);
+        g.fillOval(ovalX - 25, ovalY - 25, 50, 50);
+    }
+
+    private void showGui() {
+        setPreferredSize(new Dimension(800, 600));
+        JFrame frame = new JFrame("Программируем");
+        frame.addKeyListener(this);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(this, BorderLayout.CENTER);
+        frame.pack();
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        Osu Osu = new Osu();
+        Osu.addMouseListener(Osu);
+        Osu.showGui();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+       
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+       
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent) {
+       
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent mouseEvent) {
+     
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
+    }
+}
